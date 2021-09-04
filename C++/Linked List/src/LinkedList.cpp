@@ -235,29 +235,61 @@ int Linkedlist::middleNode()
     //         current_Node = current_Node->_next;
     //     return current_Node->_data; }
 
-    //* Without Using {size} Variable
+    // //* Without Using {size} Variable
     if (_head == _tail)
-        cerr << "Your Linked List Is Empty!";
+        cerr << "Your Linked List Only Have One Node!";
     else
     {
-        Node *fast_Node = _head;
-        Node *slow_Node = _head;
+        Node *fast_Ptr = _head;
+        Node *slow_Ptr = _head;
 
-        bool should_SlowNode_Move = false;
-        while (fast_Node != _tail)
+        bool should_SlowPtr_Move = false;
+        while (fast_Ptr != _tail)
         {
-            if (should_SlowNode_Move)
+            if (should_SlowPtr_Move)
             {
-                fast_Node = fast_Node->_next;
-                slow_Node = slow_Node->_next;
-                should_SlowNode_Move = false;
+                fast_Ptr = fast_Ptr->_next;
+                slow_Ptr = slow_Ptr->_next;
+                should_SlowPtr_Move = false;
             }
             else
             {
-                fast_Node = fast_Node->_next;
-                should_SlowNode_Move = true;
+                fast_Ptr = fast_Ptr->_next;
+                should_SlowPtr_Move = true;
             }
         }
-        return slow_Node->_data;
+        return slow_Ptr->_data;
+    }
+}
+
+bool Linkedlist::isHaveLoop()
+{
+    if (_size <= 1)
+        return false;
+    else
+    {
+        Node *fast_Ptr = _head;
+        Node *slow_Ptr = _head;
+
+        unsigned short int n = 0;
+        bool start_Loop = true;
+        while (slow_Ptr != _tail)
+        {
+            if (fast_Ptr == slow_Ptr and not start_Loop)
+                return true;
+            else if (fast_Ptr == nullptr)
+                return false;
+
+            start_Loop = false;
+
+            fast_Ptr = fast_Ptr->_next;
+            n++;
+            if (n == 2)
+            {
+                slow_Ptr = slow_Ptr->_next;
+                n = 0;
+            }
+        }
+        return false;
     }
 }

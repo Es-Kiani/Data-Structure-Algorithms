@@ -26,6 +26,7 @@ public:
     void inverse();
     int KthNodeFromEnd(long int);
     int middleNode();
+    bool isHaveLoop();
 };
 
 #endif
