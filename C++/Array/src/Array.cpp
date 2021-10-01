@@ -1,5 +1,5 @@
-#include <iostream>
 #include "../include/Array.hpp"
+#include <iostream>
 using namespace std;
 
 Array::Array(int length = 0)

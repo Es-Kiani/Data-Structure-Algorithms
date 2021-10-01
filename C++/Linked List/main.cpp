@@ -1,6 +1,5 @@
 #include "./src/LinkedList.cpp"
-#include <iostream>
-using namespace std;
+
 
 int main()
 {
@@ -52,12 +51,12 @@ int main()
 
      // cout << LinkedList1.middleNode();
 
-     if (LinkedList1.isHaveLoop())
-          cout << endl
-               << "It have loop..." << endl;
-     else
-          cout << endl
-               << "Don't have any loop!" << endl;
+     // if (LinkedList1.isHaveLoop())
+     //      cout << endl
+     //           << "It have loop..." << endl;
+     // else
+     //      cout << endl
+     //           << "Don't have any loop!" << endl;
      
 
      cout << endl

@@ -19,6 +19,7 @@ void Linkedlist::add_First(int got_Value)
 {
     Node *new_Node = new Node;
     new_Node->_data = got_Value;
+    
     if (_head == nullptr)
         _tail = new_Node;
     else
@@ -51,7 +52,8 @@ void Linkedlist::delete_First()
         cerr << "Your Linked List Is Empty!/n";
         return;
     }
-    else if (_head == _tail)
+    
+    if (_head == _tail)
     {
         Node *deleted_Head = _head;
         _head = nullptr;
@@ -76,7 +78,8 @@ void Linkedlist::delete_Last()
         cerr << "Your Linked List Is Empty!/n";
         return;
     }
-    else if (_head == _tail)
+    
+    if (_head == _tail)
     {
         Node *deleted_Head = _head;
         _head = nullptr;
@@ -86,7 +89,6 @@ void Linkedlist::delete_Last()
     else
     {
         Node *deleted_Tail = _tail;
-
         bool isFindTargetNode = false;
         Node *present_Node = _head;
         while (!isFindTargetNode)
@@ -114,36 +116,36 @@ int Linkedlist::indexOf(int target_Data)
         cerr << "Your Linked List Is Empty!";
         return -1;
     }
-    else
+
+    // //! Dirty Code
+    // while (index != _size - 1)
+    // {
+    //     if (present_Node->_data == target_Data)
+    //         return index;
+    //     else
+    //     {
+    //         present_Node = present_Node->_next;
+    //         index++;
+    //     }
+    // }
+    // return -1;
+
+    //* Clean Code
+    int index = 0;
+    Node *present_Node = _head;
+    while (true)
     {
-        int index = 0;
-        Node *present_Node = _head;
-        while (1)
+        if (present_Node->_data == target_Data)
+            return index;
+        else if (present_Node == _tail)
+            return -1;
+        else
         {
-            if (present_Node->_data == target_Data)
-                return index;
-            else if (present_Node == _tail)
-                return -1;
-            else
-            {
-                present_Node = present_Node->_next;
-                index++;
-            }
+            present_Node = present_Node->_next;
+            index++;
         }
-        /*
-        while (index != _size - 1)
-        {
-            if (present_Node->_data == target_Data)
-                return index;
-            else
-            {
-                present_Node = present_Node->_next;
-                index++;
-            }
-        }
-        return -1;
-        */
     }
+
 }
 
 bool Linkedlist::contains(int target_Data)
@@ -153,23 +155,20 @@ bool Linkedlist::contains(int target_Data)
         cerr << "Your Linked List Is Empty!";
         return false;
     }
-    else
-    {
-        //! Dirty Code
-        // Node *present_Node = _head;
-        // while (1)
-        // {
-        //     if (present_Node->_data == target_Data)
-        //         return true;
-        //     else if (present_Node == _tail)
-        //         return false;
-        //     else
-        //         present_Node = present_Node->_next;
-        // }
+    ////! Dirty Code
+    // Node *present_Node = _head;
+    // while (true)
+    // {
+    //     if (present_Node->_data == target_Data)
+    //         return true;
+    //     else if (present_Node == _tail)
+    //         return false;
+    //     else
+    //         present_Node = present_Node->_next;
+    // }
 
-        //* Clean Code
-        return indexOf(target_Data) >= 0 ? true : false;
-    }
+    ////* Clean Code
+    return indexOf(target_Data) >= 0 ? true : false;
 }
 
 void Linkedlist::inverse()
@@ -266,30 +265,22 @@ bool Linkedlist::isHaveLoop()
 {
     if (_size <= 1)
         return false;
-    else
+
+    Node *fast_Ptr = _head;
+    Node *slow_Ptr = _head;
+
+    bool first_Iterate = true;
+    while (slow_Ptr != _tail)
     {
-        Node *fast_Ptr = _head;
-        Node *slow_Ptr = _head;
+        if (fast_Ptr == slow_Ptr and not first_Iterate)
+            return true;
+        else if (fast_Ptr == nullptr)
+            return false;
 
-        unsigned short int n = 0;
-        bool start_Loop = true;
-        while (slow_Ptr != _tail)
-        {
-            if (fast_Ptr == slow_Ptr and not start_Loop)
-                return true;
-            else if (fast_Ptr == nullptr)
-                return false;
+        first_Iterate = false;
 
-            start_Loop = false;
-
-            fast_Ptr = fast_Ptr->_next;
-            n++;
-            if (n == 2)
-            {
-                slow_Ptr = slow_Ptr->_next;
-                n = 0;
-            }
-        }
-        return false;
+        fast_Ptr = fast_Ptr->_next->_next;
+        slow_Ptr = slow_Ptr->_next;
     }
+    return false;
 }
